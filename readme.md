@@ -14,3 +14,23 @@ To use, just
 
 
 More to come.
+
+## aside: I used ChatGPT to generate a lot of this
+
+I gave chatgpt this prompt:
+
+>>> write me arduino code for the ESP32 that listens for messages over Serial2 and then passes every 100th message or a message every 1 second over mqtt to a.broker.com
+
+And it provided most of the structure. It botched the callback functions for MQTT (effectively pretended PubSubClient behaved as a serial port with `client.avaiable()`). 
+
+When I informed it of its mistake
+
+>>> so that's not how the mqtt client works, it needs a callback function
+
+It apologized,
+
+>>> You're correct, my apologies for the oversight. Here is the modified code that uses a callback function to handle incoming MQTT messages:
+
+And then gave me the correct code. 
+
+So you still need to know what to ask it and to be able to do a code review, but it's remarkable we got it done.
