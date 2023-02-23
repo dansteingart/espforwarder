@@ -29,7 +29,13 @@ void setup() {
   // Connect to MQTT broker
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
-  while (!client.connected()) {
+  reconnect();
+}
+
+
+void reconnect()
+{
+    while (!client.connected()) {
     Serial.println("Connecting to MQTT broker...");
     if (client.connect(mqtt_name)) {
       Serial.println("Connected to MQTT broker");
@@ -43,7 +49,9 @@ void setup() {
       delay(5000);
     }
   }
+
 }
+
 
 void loop() {
   if (Serial2.available() > 0) {
@@ -64,6 +72,7 @@ void loop() {
   
 
   // Check for incoming MQTT messages
+  if (!client.connected()) reconnect();
   client.loop();
 }
 
